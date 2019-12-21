@@ -6,10 +6,6 @@ socket.on('message',(msg)=>{
 })
 
 
-// socket.on('countUpdated',(count)=>{
-//    console.log('the count has been Updated ',count) 
-// })
-
 document.querySelector('#messageForm').addEventListener('submit',(e)=>{
    // console.log('Clicked')
    e.preventDefault()
