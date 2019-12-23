@@ -10,8 +10,8 @@ document.querySelector('#messageForm').addEventListener('submit',(e)=>{
    // console.log('Clicked')
    e.preventDefault()
    const message = e.target.elements.message.value
-   socket.emit('sendMessage',message,()=>{
-       console.log('the message was delivered')
+   socket.emit('sendMessage',message,(retmsg)=>{
+       console.log(retmsg)
    })
 })
 

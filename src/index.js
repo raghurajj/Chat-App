@@ -2,6 +2,7 @@ const path=require('path')
 const http = require('http')
 const express = require('express')
 const socketio = require('socket.io')
+const filter = require('bad-words')
 
 const app = express()
 const server = http.createServer(app)
@@ -20,8 +21,15 @@ io.on('connection',(socket)=>{
     socket.broadcast.emit('message','A new user has joined')
 
     socket.on('sendMessage',(message,callback)=>{
+
+        const fltr = new filter()
+        if(fltr.isProfane(message))
+        {
+            return callback('Profanity is not allowed')
+        }
+
         io.emit('message',message) 
-        callback()
+        callback('Message delivered')
     })
 
     socket.on('sendLocation',(coords)=>{
