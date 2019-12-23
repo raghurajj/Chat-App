@@ -16,10 +16,12 @@ io.on('connection',(socket)=>{
     console.log('new websocket connection')
 
     socket.emit('message','Welcome!!!')
+
     socket.broadcast.emit('message','A new user has joined')
 
-    socket.on('sendMessage',(message)=>{
-        io.emit('message',message)
+    socket.on('sendMessage',(message,callback)=>{
+        io.emit('message',message) 
+        callback()
     })
 
     socket.on('sendLocation',(coords)=>{
