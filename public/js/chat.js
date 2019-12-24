@@ -1,16 +1,25 @@
 const socket = io()
 
-
+const $messageform = document.querySelector('#messageForm')
+const $messageFormInput = $messageform.querySelector('input')
+const $messageFormButton = $messageform.querySelector('button')
+ 
 socket.on('message',(msg)=>{
     console.log(msg)
 })
 
 
-document.querySelector('#messageForm').addEventListener('submit',(e)=>{
+$messageform.addEventListener('submit',(e)=>{
    // console.log('Clicked')
    e.preventDefault()
+
+   $messageFormButton.setAttribute('disabled','disabled')
+
    const message = e.target.elements.message.value
    socket.emit('sendMessage',message,(retmsg)=>{
+    $messageFormButton.removeAttribute('disabled')
+    $messageFormInput.value=''
+    $messageFormInput.focus()
        console.log(retmsg)
    })
 })
