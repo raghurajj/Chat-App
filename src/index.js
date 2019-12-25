@@ -6,7 +6,7 @@ const filter = require('bad-words')
 const { generateMessage,generateLocationMessage } = require('./utils/messages')
 
 const app = express()
-const server = http.createServer(app)
+const server = http.createServer(app) 
 const io = socketio(server)
 
 const port = process.env.PORT || 3000
@@ -21,7 +21,7 @@ io.on('connection',(socket)=>{
         socket.join(room)
 
         socket.emit('message',generateMessage('Welcome!!'))
-        socket.broadcast.emit('message',generateMessage('A new user has joined'))
+        socket.broadcast.to(room).emit('message',generateMessage(`${username} has joined`))
 
     })
 
