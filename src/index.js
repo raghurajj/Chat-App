@@ -3,7 +3,7 @@ const http = require('http')
 const express = require('express')
 const socketio = require('socket.io')
 const filter = require('bad-words')
-
+const { generateMessage } = require('./utils/messages')
 const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
@@ -13,12 +13,12 @@ const publicDirectoryPath = path.join(__dirname,'../public')
 
 app.use(express.static(publicDirectoryPath))
 
-io.on('connection',(socket)=>{
+io.on('connection',(socket)=>{  
     console.log('new websocket connection')
 
-    socket.emit('message','Welcome!!!')
+    socket.emit('message',generateMessage('Welcome!!'))
 
-    socket.broadcast.emit('message','A new user has joined')
+    socket.broadcast.emit('message',generateMessage('A new user has joined'))
 
     socket.on('sendMessage',(message,callback)=>{
 
@@ -27,19 +27,20 @@ io.on('connection',(socket)=>{
         {
             return callback('Profanity is not allowed')
         }
-
-        io.emit('message',message) 
+ 
+        io.emit('message',generateMessage(message)) 
         callback('Message delivered')
     })
 
     socket.on('sendLocation',(coords,callback)=>{
+
         io.emit('locationMessage',`https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
 
         callback('Location shared!!')
     })
 
     socket.on('disconnect',()=>{
-        io.emit('message','A user has left')
+        io.emit('message',generateMessage('A user has left'))
     })
 
 

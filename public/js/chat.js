@@ -14,7 +14,8 @@ const lmessageTemplate = document.querySelector('#lmessage-template').innerHTML
 socket.on('message',(msg)=>{
     console.log(msg)
     const html = Mustache.render(messageTemplate,{
-        message:msg 
+        message:msg.text,
+        createdAt:moment(msg.createdAt).format('hh:mm a') 
     })
     $messages.insertAdjacentHTML('beforeend',html)
 })
