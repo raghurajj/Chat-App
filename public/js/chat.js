@@ -16,7 +16,8 @@ socket.on('message',(msg)=>{
     console.log(msg)
     const html = Mustache.render(messageTemplate,{
         message:msg.text,
-        createdAt:moment(msg.createdAt).format('hh:mm a') 
+        createdAt:moment(msg.createdAt).format('hh:mm a'),
+        username:msg.username 
     })
     $messages.insertAdjacentHTML('beforeend',html)
 })
@@ -26,7 +27,8 @@ socket.on('locationMessage',(locationLink)=>{
     console.log(locationLink)
     const html = Mustache.render(lmessageTemplate,{
         locationLink:locationLink.link,
-        createdAt:moment(locationLink.createdAt).format('hh:mm a')
+        createdAt:moment(locationLink.createdAt).format('hh:mm a'),
+        username:locationLink.username
     })
     $messages.insertAdjacentHTML('beforeend',html)
 })
@@ -55,7 +57,9 @@ $locationButton.addEventListener('click',()=>{
         $locationButton.removeAttribute('disabled')
         return alert('Geolocation is not supported by your browser')   
     }
+
     $locationButton.setAttribute('disabled','disabled')
+
     navigator.geolocation.getCurrentPosition((position)=>{
         socket.emit('sendLocation',{
             latitude:position.coords.latitude,

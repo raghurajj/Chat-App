@@ -17,7 +17,7 @@
             <div id="messages" class="chat__messages"></div>
             <div class="compose">
                 <form id="messageForm">
-                    <input name="message" type="text" placeholder="type your message"></input>
+                    <input name="message" type="text" placeholder="type your message" required autocomplete="off"></input>
                     <button id>Send</button>
                 </form>
                 <button id="send-location">Send location</button>
@@ -25,13 +25,12 @@
         </div>
 
     </div> 
-    <!-- <button id="increment">+1</button> -->
 
    
     <script id="message-template" type="text/html">
         <div class="message">
             <p>
-                <span class="message__name">user_name</span>
+                <span class="message__name">{{username}}</span>
                 <span class="message__meta">{{createdAt}}</span>
             </p>
             <p>{{message}}</p>
@@ -41,7 +40,7 @@
     <script id="lmessage-template" type="text/html">
         <div class="message">
             <p>
-                <span class="message__name">user_name</span>
+                <span class="message__name">{{username}}</span>
                 <span class="message__meta">{{createdAt}}</span>
             </p>
            <p><a href="{{locationLink}}" target="_blank">My Current Location</a></p>
